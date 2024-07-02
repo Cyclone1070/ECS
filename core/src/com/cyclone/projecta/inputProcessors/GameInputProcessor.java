@@ -14,7 +14,7 @@ public class GameInputProcessor implements InputProcessor {
     int maxX;
     int maxY;
     // For interpolation
-    private boolean isMoving = false;
+    private boolean isMoving;
     private float targetX;
     private float targetY;
     private float startX;
@@ -34,6 +34,7 @@ public class GameInputProcessor implements InputProcessor {
         timer = new Timer();
         targetX = camera.position.x;
         targetY = camera.position.y;
+        isMoving = false;
     }
 
     @Override
@@ -147,7 +148,7 @@ public class GameInputProcessor implements InputProcessor {
     }
 
     private void cameraInterpolation(int directionX, int directionY) {
-        if (!isMoving) {
+        if (isMoving) {
             return;
         }
         isMoving = true;
