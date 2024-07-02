@@ -1,31 +1,34 @@
 package com.cyclone.projecta;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.ScreenUtils;
+import com.cyclone.projecta.screens.MainMenuScreen;
 
-public class App extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
-	
-	@Override
-	public void create () {
+public class App extends Game {
+	public SpriteBatch batch;
+	public BitmapFont font;
+	public int gridWidth = 50;
+	public int gridHeight = 30;
+	public int gridDepth = 1;
+	public int gridSize = 32;
+	public int viewportWidth = 1280;
+	public int viewportHeight = 704;
+
+	public void create() {
+		font = new BitmapFont(Gdx.files.internal("fonts/monogram-32.fnt"), Gdx.files.internal("fonts/monogram.png"),
+				false);
 		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+		this.setScreen(new MainMenuScreen(this));
 	}
 
-	@Override
-	public void render () {
-		ScreenUtils.clear(1, 0, 0, 1);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
+	public void render() {
+		super.render(); // important!
 	}
-	
-	@Override
-	public void dispose () {
+
+	public void dispose() {
 		batch.dispose();
-		img.dispose();
+		font.dispose();
 	}
 }
