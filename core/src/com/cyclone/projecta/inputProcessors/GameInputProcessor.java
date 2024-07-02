@@ -3,16 +3,15 @@ package com.cyclone.projecta.inputProcessors;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.utils.Timer;
 import com.cyclone.projecta.App;
 
 public class GameInputProcessor implements InputProcessor {
-    App game;
+    private App game;
     // For checking camera bound
-    OrthographicCamera camera;
-    int maxX;
-    int maxY;
+    private OrthographicCamera camera;
+    private int maxX;
+    private int maxY;
     // For interpolation
     private boolean isMoving;
     private float targetX;
@@ -21,7 +20,44 @@ public class GameInputProcessor implements InputProcessor {
     private float startY;
     private float elapsedTime;
     private final float moveDuration = 0.1f;
-    Timer.Task interpolationTask;
+
+    // Getters and setters
+    public float getTargetX() {
+        return targetX;
+    }
+
+    public float getTargetY() {
+        return targetY;
+    }
+
+    public float getStartX() {
+        return startX;
+    }
+
+    public float getStartY() {
+        return startY;
+    }
+
+    public float getMoveDuration() {
+        return moveDuration;
+    }
+
+    public void setElapsedTime(float elapsedTime) {
+        this.elapsedTime = elapsedTime;
+    }
+
+    public float getElapsedTime() {
+        return elapsedTime;
+    }
+
+    public boolean getIsMoving() {
+        return isMoving;
+    }
+
+    public void setIsMoving(boolean isMoving) {
+        this.isMoving = isMoving;
+    }
+
     // For key repeat when held down
     private Timer timer;
     private Timer.Task keyRepeatTask;
@@ -41,6 +77,9 @@ public class GameInputProcessor implements InputProcessor {
     public boolean keyDown(int keycode) {
         processInput(keycode);
         // Repeat if key is held down
+        if (keyRepeatTask != null) {
+            keyRepeatTask.cancel();
+        }
         timer.scheduleTask(keyRepeatTask = new Timer.Task() {
             @Override
             public void run() {
@@ -56,41 +95,6 @@ public class GameInputProcessor implements InputProcessor {
             keyRepeatTask.cancel();
         }
         return true;
-    }
-
-    @Override
-    public boolean keyTyped(char character) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean touchCancelled(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        return false;
-    }
-
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        return false;
-    }
-
-    @Override
-    public boolean scrolled(float amountX, float amountY) {
-        return false;
     }
 
     // Call function to respond to input
@@ -147,6 +151,7 @@ public class GameInputProcessor implements InputProcessor {
         }
     }
 
+    // To animate the camera
     private void cameraInterpolation(int directionX, int directionY) {
         if (isMoving) {
             return;
@@ -157,20 +162,40 @@ public class GameInputProcessor implements InputProcessor {
         startX = camera.position.x;
         startY = camera.position.y;
         elapsedTime = 0;
+    }
 
-        timer.scheduleTask(interpolationTask = new Timer.Task() {
-            @Override
-            public void run() {
-                elapsedTime += 0.01f;
-                float progress = Math.min(1, elapsedTime / moveDuration);
-                camera.position.set(Interpolation.linear.apply(startX, targetX, progress),
-                        Interpolation.linear.apply(startY, targetY, progress), 0);
-                if (camera.position.x == targetX && camera.position.y == targetY) {
-                    interpolationTask.cancel();
-                    isMoving = false;
-                }
-            }
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
 
-        }, 0, 0.01f);
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchCancelled(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(float amountX, float amountY) {
+        return false;
     }
 }
