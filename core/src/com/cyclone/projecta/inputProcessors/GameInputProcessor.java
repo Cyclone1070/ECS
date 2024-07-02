@@ -3,7 +3,6 @@ package com.cyclone.projecta.inputProcessors;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Cursor.SystemCursor;
 import com.badlogic.gdx.utils.Timer;
 import com.cyclone.projecta.App;
 
