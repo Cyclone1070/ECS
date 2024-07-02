@@ -8,8 +8,8 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.cyclone.projecta.App;
 
 public class MainMenuScreen implements Screen {
-    final App game;
-    OrthographicCamera camera;
+    private final App game;
+    private OrthographicCamera camera;
 
     public MainMenuScreen(App game) {
         this.game = game;
