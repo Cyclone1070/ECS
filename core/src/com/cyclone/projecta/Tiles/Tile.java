@@ -2,7 +2,8 @@ package com.cyclone.projecta.Tiles;
 
 public enum Tile {
     FLOOR("."),
-    WALL("#");
+    WALL("#"),
+    VOID("");
 
     private final String symbol;
 

@@ -34,19 +34,19 @@ public class GameScreen implements Screen {
             cameraInput.setElapsedTime(cameraInput.getElapsedTime() + delta);
             float progress = Math.min(1, cameraInput.getElapsedTime() / cameraInput.getMoveDuration());
             camera.position.set(
-                    Interpolation.linear.apply(cameraInput.getStartX(), cameraInput.getTargetX(), progress),
-                    Interpolation.linear.apply(cameraInput.getStartY(), cameraInput.getTargetY(), progress), 0);
+                    Interpolation.smooth.apply(cameraInput.getStartX(), cameraInput.getTargetX(), progress),
+                    Interpolation.smooth.apply(cameraInput.getStartY(), cameraInput.getTargetY(), progress), 0);
             if (camera.position.x == cameraInput.getTargetX() && camera.position.y == cameraInput.getTargetY()) {
                 cameraInput.setIsMoving(false);
             }
         }
+        camera.update();
         // For rendering the tiles in view
         int minTileX = (int) ((camera.position.x - (camera.viewportWidth) / 2) / game.gridSize);
         int maxTileX = (int) ((camera.position.x + (camera.viewportWidth) / 2) / game.gridSize - 1);
         int minTileY = (int) ((camera.position.y - (camera.viewportHeight) / 2) / game.gridSize);
         int maxTileY = (int) ((camera.position.y + (camera.viewportHeight) / 2) / game.gridSize - 1);
         ScreenUtils.clear(0, 0, 0.2f, 1);
-        camera.update();
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
         for (int x = minTileX; x <= maxTileX; x++) {

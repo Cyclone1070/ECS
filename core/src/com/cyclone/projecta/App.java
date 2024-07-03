@@ -10,7 +10,7 @@ public class App extends Game {
 	public SpriteBatch batch;
 	public BitmapFont font;
 	public int gridWidth = 50;
-	public int gridHeight = 30;
+	public int gridHeight = 50;
 	public int gridDepth = 1;
 	public int gridSize = 32;
 	public int viewportWidth = 1280;
