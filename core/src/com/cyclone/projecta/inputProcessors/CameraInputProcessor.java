@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.Timer;
 import com.cyclone.projecta.App;
 
-public class GameInputProcessor implements InputProcessor {
+public class CameraInputProcessor implements InputProcessor {
     private App game;
     // For checking camera bound
     private OrthographicCamera camera;
@@ -62,7 +62,7 @@ public class GameInputProcessor implements InputProcessor {
     private Timer timer;
     private Timer.Task keyRepeatTask;
 
-    public GameInputProcessor(OrthographicCamera camera, App game) {
+    public CameraInputProcessor(OrthographicCamera camera, App game) {
         this.camera = camera;
         this.game = game;
         maxX = game.gridWidth * game.gridSize - (int) camera.viewportWidth / 2;
