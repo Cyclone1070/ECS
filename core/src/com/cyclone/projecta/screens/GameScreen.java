@@ -7,14 +7,14 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.cyclone.projecta.App;
 import com.cyclone.projecta.Tiles.TilesBuilder;
-import com.cyclone.projecta.inputProcessors.GameInputProcessor;
+import com.cyclone.projecta.inputProcessors.CameraInputProcessor;
 import com.cyclone.projecta.Tiles.Tile;
 
 public class GameScreen implements Screen {
     private final App game;
     private OrthographicCamera camera;
     private Tile[][][] tiles;
-    private GameInputProcessor inputProcessor;
+    private CameraInputProcessor cameraInput;
 
     public GameScreen(App game) {
         this.game = game;
@@ -23,21 +23,21 @@ public class GameScreen implements Screen {
         camera.setToOrtho(false, game.viewportWidth, game.viewportHeight);
 
         this.tiles = TilesBuilder.build(game.gridWidth, game.gridHeight, 1);
-        inputProcessor = new GameInputProcessor(camera, game);
-        Gdx.input.setInputProcessor(inputProcessor);
+        cameraInput = new CameraInputProcessor(camera, game);
+        Gdx.input.setInputProcessor(cameraInput);
     }
 
     @Override
     public void render(float delta) {
         // For moving the cameras in respond to input
-        if (inputProcessor.getIsMoving()) {
-            inputProcessor.setElapsedTime(inputProcessor.getElapsedTime() + delta);
-            float progress = Math.min(1, inputProcessor.getElapsedTime() / inputProcessor.getMoveDuration());
+        if (cameraInput.getIsMoving()) {
+            cameraInput.setElapsedTime(cameraInput.getElapsedTime() + delta);
+            float progress = Math.min(1, cameraInput.getElapsedTime() / cameraInput.getMoveDuration());
             camera.position.set(
-                    Interpolation.linear.apply(inputProcessor.getStartX(), inputProcessor.getTargetX(), progress),
-                    Interpolation.linear.apply(inputProcessor.getStartY(), inputProcessor.getTargetY(), progress), 0);
-            if (camera.position.x == inputProcessor.getTargetX() && camera.position.y == inputProcessor.getTargetY()) {
-                inputProcessor.setIsMoving(false);
+                    Interpolation.linear.apply(cameraInput.getStartX(), cameraInput.getTargetX(), progress),
+                    Interpolation.linear.apply(cameraInput.getStartY(), cameraInput.getTargetY(), progress), 0);
+            if (camera.position.x == cameraInput.getTargetX() && camera.position.y == cameraInput.getTargetY()) {
+                cameraInput.setIsMoving(false);
             }
         }
         // For rendering the tiles in view
