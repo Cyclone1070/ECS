@@ -11,10 +11,10 @@ public class CameraInputProcessor implements InputProcessor {
     private App game;
     // For checking camera bound
     private OrthographicCamera camera;
-    private int maxX;
-    private int maxY;
+    private float maxX;
+    private float maxY;
     // For interpolation
-    private boolean isMoving;
+    private boolean isMoving = false;
     private float targetX;
     private float targetY;
     private float startX;
@@ -61,18 +61,16 @@ public class CameraInputProcessor implements InputProcessor {
 
     // endregion
     // For key repeat when held down
-    private Timer timer;
+    private Timer timer = new Timer();
     private Timer.Task keyRepeatTask;
 
     public CameraInputProcessor(OrthographicCamera camera, App game) {
         this.camera = camera;
         this.game = game;
-        maxX = game.gridWidth * game.gridSize - (int) camera.viewportWidth / 2;
-        maxY = game.gridHeight * game.gridSize - (int) camera.viewportHeight / 2;
-        timer = new Timer();
+        maxX = game.gridWidth * game.gridSize - camera.viewportWidth / 2;
+        maxY = game.gridHeight * game.gridSize - camera.viewportHeight / 2;
         targetX = camera.position.x;
         targetY = camera.position.y;
-        isMoving = false;
     }
 
     @Override
@@ -109,7 +107,7 @@ public class CameraInputProcessor implements InputProcessor {
                     if (camera.position.x + game.gridSize * 5 <= maxX) {
                         cameraInterpolation(game.gridSize * 5, 0);
                     } else {
-                        cameraInterpolation(maxX - (int) camera.position.x, 0);
+                        cameraInterpolation(maxX - camera.position.x, 0);
                     }
                 } else if (camera.position.x + game.gridSize <= maxX) {
                     cameraInterpolation(game.gridSize, 0);
@@ -121,7 +119,7 @@ public class CameraInputProcessor implements InputProcessor {
                     if (camera.position.x - game.gridSize * 5 >= camera.viewportWidth / 2) {
                         cameraInterpolation(-game.gridSize * 5, 0);
                     } else {
-                        cameraInterpolation((int) (camera.viewportWidth / 2 - camera.position.x), 0);
+                        cameraInterpolation((camera.viewportWidth / 2 - camera.position.x), 0);
                     }
                 } else if (camera.position.x - game.gridSize >= camera.viewportWidth / 2) {
                     cameraInterpolation(-game.gridSize, 0);
@@ -133,7 +131,7 @@ public class CameraInputProcessor implements InputProcessor {
                     if (camera.position.y - game.gridSize * 5 >= camera.viewportHeight / 2) {
                         cameraInterpolation(0, -game.gridSize * 5);
                     } else {
-                        cameraInterpolation(0, (int) (camera.viewportHeight / 2 - camera.position.y));
+                        cameraInterpolation(0, (camera.viewportHeight / 2 - camera.position.y));
                     }
                 } else if (camera.position.y - game.gridSize >= camera.viewportHeight / 2) {
                     cameraInterpolation(0, -game.gridSize);
@@ -145,7 +143,7 @@ public class CameraInputProcessor implements InputProcessor {
                     if (camera.position.y + game.gridSize * 5 <= maxY) {
                         cameraInterpolation(0, game.gridSize * 5);
                     } else {
-                        cameraInterpolation(0, maxY - (int) camera.position.y);
+                        cameraInterpolation(0, maxY - camera.position.y);
                     }
                 } else if (camera.position.y + game.gridSize <= maxY) {
                     cameraInterpolation(0, game.gridSize);
@@ -157,7 +155,7 @@ public class CameraInputProcessor implements InputProcessor {
                             && camera.position.y + game.gridSize * 5 <= maxY) {
                         cameraInterpolation(game.gridSize * 5, game.gridSize * 5);
                     } else {
-                        int distance = Math.min(maxX - (int) camera.position.x, maxY - (int) camera.position.y);
+                        float distance = Math.min(maxX - camera.position.x, maxY - camera.position.y);
                         cameraInterpolation(distance, distance);
                     }
                 } else if (camera.position.x + game.gridSize <= maxX && camera.position.y + game.gridSize <= maxY) {
@@ -170,8 +168,8 @@ public class CameraInputProcessor implements InputProcessor {
                             && camera.position.y + game.gridSize * 5 <= maxY) {
                         cameraInterpolation(-game.gridSize * 5, game.gridSize * 5);
                     } else {
-                        int distance = Math.min(Math.abs((int) (camera.viewportWidth / 2 - camera.position.x)),
-                                maxY - (int) camera.position.y);
+                        float distance = Math.min(Math.abs(camera.viewportWidth / 2 - camera.position.x),
+                                maxY - camera.position.y);
                         cameraInterpolation(-distance, distance);
                     }
                 } else if (camera.position.x - game.gridSize >= camera.viewportWidth / 2
@@ -185,8 +183,8 @@ public class CameraInputProcessor implements InputProcessor {
                             && camera.position.y - game.gridSize * 5 >= camera.viewportHeight / 2) {
                         cameraInterpolation(-game.gridSize * 5, -game.gridSize * 5);
                     } else {
-                        int distance = Math.max((int) (camera.viewportWidth / 2 - camera.position.x),
-                                (int) (camera.viewportHeight / 2 - camera.position.y));
+                        float distance = Math.max(camera.viewportWidth / 2 - camera.position.x,
+                                camera.viewportHeight / 2 - camera.position.y);
                         cameraInterpolation(distance, distance);
                     }
                 } else if (camera.position.x - game.gridSize >= camera.viewportWidth / 2
@@ -200,8 +198,8 @@ public class CameraInputProcessor implements InputProcessor {
                             && camera.position.y - game.gridSize * 5 >= camera.viewportHeight / 2) {
                         cameraInterpolation(game.gridSize * 5, -game.gridSize * 5);
                     } else {
-                        int distance = Math.min(maxX - (int) camera.position.x,
-                                Math.abs((int) (camera.viewportHeight / 2 - camera.position.y)));
+                        float distance = Math.min(maxX - camera.position.x,
+                                Math.abs(camera.viewportHeight / 2 - camera.position.y));
                         cameraInterpolation(distance, -distance);
                     }
                 } else if (camera.position.x + game.gridSize <= maxX
@@ -213,13 +211,13 @@ public class CameraInputProcessor implements InputProcessor {
     }
 
     // To animate the camera
-    private void cameraInterpolation(int directionX, int directionY) {
+    private void cameraInterpolation(float distanceX, float distanceY) {
         if (isMoving) {
             return;
         }
         isMoving = true;
-        targetX += directionX;
-        targetY += directionY;
+        targetX += distanceX;
+        targetY += distanceY;
         startX = camera.position.x;
         startY = camera.position.y;
         elapsedTime = 0;

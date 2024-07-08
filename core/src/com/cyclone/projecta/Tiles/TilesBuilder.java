@@ -6,6 +6,15 @@ public class TilesBuilder {
         Tile[][][] tiles = new Tile[width][height][depth];
         randomiseTiles(width, height, depth, tiles);
         smoothTiles(5, width, height, depth, tiles);
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                for (int z = 0; z < depth; z++) {
+                    if (x == 0 || x == width - 1 || y == 0 || y == height - 1) {
+                        tiles[x][y][z] = Tile.BOUND;
+                    }
+                }
+            }
+        }
         return tiles;
     }
 
