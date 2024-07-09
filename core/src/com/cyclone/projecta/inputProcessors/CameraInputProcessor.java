@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.utils.Timer;
 import com.cyclone.projecta.App;
 
 public class CameraInputProcessor implements InputProcessor {
@@ -21,6 +20,9 @@ public class CameraInputProcessor implements InputProcessor {
     private float startY;
     private float elapsedTime;
     private final float moveDuration = 0.1f;
+    // For key held down repeat
+    private int currentKeyHeld = 0;
+    private float timeHeld = 0f;
 
     // region Getters and setters
     public float getTargetX() {
@@ -59,10 +61,19 @@ public class CameraInputProcessor implements InputProcessor {
         this.isMoving = isMoving;
     }
 
+    public float getTimeHeld() {
+        return timeHeld;
+    }
+
+    public void setTimeHeld(float timeHeld) {
+        this.timeHeld = timeHeld;
+    }
+
+    public int getCurrentKeyHeld() {
+        return currentKeyHeld;
+    }
     // endregion
     // For key repeat when held down
-    private Timer timer = new Timer();
-    private Timer.Task keyRepeatTask;
 
     public CameraInputProcessor(OrthographicCamera camera, App game) {
         this.camera = camera;
@@ -77,28 +88,20 @@ public class CameraInputProcessor implements InputProcessor {
     public boolean keyDown(int keycode) {
         processInput(keycode);
         // Repeat if key is held down
-        if (keyRepeatTask != null) {
-            keyRepeatTask.cancel();
-        }
-        timer.scheduleTask(keyRepeatTask = new Timer.Task() {
-            @Override
-            public void run() {
-                processInput(keycode);
-            }
-        }, 0.4f, 0.1f);
+        currentKeyHeld = keycode;
         return true;
     }
 
     @Override
     public boolean keyUp(int keycode) {
-        if (keyRepeatTask != null) {
-            keyRepeatTask.cancel();
+        if (currentKeyHeld == keycode) {
+            currentKeyHeld = 0;
         }
         return true;
     }
 
     // Call function to respond to input
-    private void processInput(int keycode) {
+    public void processInput(int keycode) {
         switch (keycode) {
             case Input.Keys.RIGHT:
             case Input.Keys.L:

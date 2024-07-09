@@ -74,6 +74,14 @@ public class GameScreen implements Screen {
                 cameraInput.setIsMoving(false);
             }
         }
+        if (cameraInput.getCurrentKeyHeld() != 0) {
+            cameraInput.setTimeHeld(cameraInput.getTimeHeld() + delta);
+        } else {
+            cameraInput.setTimeHeld(0);
+        }
+        if (cameraInput.getTimeHeld() > 0.5f && cameraInput.getIsMoving() == false) {
+            cameraInput.processInput(cameraInput.getCurrentKeyHeld());
+        }
         camera.update();
         // For rendering the tiles in view
         int minTileX = (int) ((camera.position.x - (camera.viewportWidth) / 2) / game.gridSize);
@@ -86,6 +94,7 @@ public class GameScreen implements Screen {
         if (maxTileY < game.gridHeight - 1) {
             maxTileY++;
         }
+        // render
         ScreenUtils.clear(0, 0, 0.2f, 1);
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
@@ -131,7 +140,6 @@ public class GameScreen implements Screen {
                 } else if (tiles[x][y][z] == Tile.BOUND) {
                     game.batch.setColor(Color.BLACK);
                     game.batch.draw(bound, x * game.gridSize, y * game.gridSize);
-
                 }
             }
         }
