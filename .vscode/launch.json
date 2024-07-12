@@ -15,7 +15,7 @@
             "name": "DesktopLauncher",
             "request": "launch",
             "mainClass": "com.cyclone.projecta.DesktopLauncher",
-            "projectName": "projectA-desktop",
+            "projectName": "projecta-desktop",
             "vmArgs": "-XstartOnFirstThread"
         },
         {
@@ -23,7 +23,7 @@
             "name": "IOSLauncher",
             "request": "launch",
             "mainClass": "com.cyclone.projecta.IOSLauncher",
-            "projectName": "projectA-ios"
+            "projectName": "projecta-ios"
         }
     ]
 }

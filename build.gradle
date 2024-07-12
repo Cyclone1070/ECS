@@ -21,7 +21,7 @@ allprojects {
 
     version = '1.0'
     ext {
-        appName = "projectA"
+        appName = "projecta"
         gdxVersion = '1.12.1'
         roboVMVersion = '2.3.21'
         box2DLightsVersion = '1.5'
@@ -49,9 +49,34 @@ project(":desktop") {
         implementation project(":core")
         api "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-        // Freetype font support
-        api "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
+        
+    }
+}
 
+project(":core") {
+    apply plugin: "java-library"
+
+
+    dependencies {
+        api "com.badlogicgames.gdx:gdx:$gdxVersion"
+        api "com.badlogicgames.ashley:ashley:$ashleyVersion"
+        // Squidlib
+        api "com.squidpony:squidlib-util:3.0.6"
+    }
+}
+
+project(":ios") {
+    apply plugin: "java-library"
+    apply plugin: "robovm"
+
+
+    dependencies {
+        implementation project(":core")
+        api "com.mobidevelop.robovm:robovm-rt:$roboVMVersion"
+        api "com.mobidevelop.robovm:robovm-cocoatouch:$roboVMVersion"
+        api "com.badlogicgames.gdx:gdx-backend-robovm:$gdxVersion"
+        api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-ios"
+        
     }
 }
 
@@ -67,42 +92,7 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-arm64-v8a"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86_64"
-        // Freetype font support
-        api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
-        natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-armeabi-v7a"
-        natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-arm64-v8a"
-        natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86"
-        natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86_64"
-
-    }
-}
-
-project(":ios") {
-    apply plugin: "java-library"
-    apply plugin: "robovm"
-
-
-    dependencies {
-        implementation project(":core")
-        api "com.mobidevelop.robovm:robovm-rt:$roboVMVersion"
-        api "com.mobidevelop.robovm:robovm-cocoatouch:$roboVMVersion"
-        api "com.badlogicgames.gdx:gdx-backend-robovm:$gdxVersion"
-        api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-ios"
-        // Freetype font support
-        api "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-ios"
-    }
-}
-
-project(":core") {
-    apply plugin: "java-library"
-
-
-    dependencies {
-        api "com.badlogicgames.gdx:gdx:$gdxVersion"
-        // Squidlib
-        api "com.squidpony:squidlib-util:3.0.6"
-        // Freetype font support
-        api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+        api "com.badlogicgames.ashley:ashley:$ashleyVersion"
         
     }
 }

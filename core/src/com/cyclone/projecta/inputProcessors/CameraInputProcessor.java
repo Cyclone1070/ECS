@@ -19,7 +19,7 @@ public class CameraInputProcessor implements InputProcessor {
     private float startX;
     private float startY;
     private float elapsedTime;
-    private final float moveDuration = 0.1f;
+    private final float moveDuration = 0.15f;
     // For key held down repeat
     private int currentKeyHeld = 0;
     private float timeHeld = 0f;
@@ -105,109 +105,73 @@ public class CameraInputProcessor implements InputProcessor {
         switch (keycode) {
             case Input.Keys.RIGHT:
             case Input.Keys.L:
-                // shift held down for faster movement
-                if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) || Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT)) {
-                    if (camera.position.x + game.gridSize * 5 <= maxX) {
-                        cameraInterpolation(game.gridSize * 5, 0);
-                    } else {
-                        cameraInterpolation(maxX - camera.position.x, 0);
-                    }
-                } else if (camera.position.x + game.gridSize <= maxX) {
-                    cameraInterpolation(game.gridSize, 0);
+                if (camera.position.x + game.gridSize * 5 <= maxX) {
+                    cameraInterpolation(game.gridSize * 5, 0);
+                } else {
+                    cameraInterpolation(maxX - camera.position.x, 0);
                 }
                 break;
             case Input.Keys.LEFT:
             case Input.Keys.H:
-                if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) || Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT)) {
-                    if (camera.position.x - game.gridSize * 5 >= camera.viewportWidth / 2) {
-                        cameraInterpolation(-game.gridSize * 5, 0);
-                    } else {
-                        cameraInterpolation((camera.viewportWidth / 2 - camera.position.x), 0);
-                    }
-                } else if (camera.position.x - game.gridSize >= camera.viewportWidth / 2) {
-                    cameraInterpolation(-game.gridSize, 0);
+                if (camera.position.x - game.gridSize * 5 >= camera.viewportWidth / 2) {
+                    cameraInterpolation(-game.gridSize * 5, 0);
+                } else {
+                    cameraInterpolation((camera.viewportWidth / 2 - camera.position.x), 0);
                 }
                 break;
             case Input.Keys.DOWN:
             case Input.Keys.J:
-                if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) || Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT)) {
-                    if (camera.position.y - game.gridSize * 5 >= camera.viewportHeight / 2) {
-                        cameraInterpolation(0, -game.gridSize * 5);
-                    } else {
-                        cameraInterpolation(0, (camera.viewportHeight / 2 - camera.position.y));
-                    }
-                } else if (camera.position.y - game.gridSize >= camera.viewportHeight / 2) {
-                    cameraInterpolation(0, -game.gridSize);
+                if (camera.position.y - game.gridSize * 5 >= camera.viewportHeight / 2) {
+                    cameraInterpolation(0, -game.gridSize * 5);
+                } else {
+                    cameraInterpolation(0, (camera.viewportHeight / 2 - camera.position.y));
                 }
                 break;
             case Input.Keys.UP:
             case Input.Keys.K:
-                if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) || Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT)) {
-                    if (camera.position.y + game.gridSize * 5 <= maxY) {
-                        cameraInterpolation(0, game.gridSize * 5);
-                    } else {
-                        cameraInterpolation(0, maxY - camera.position.y);
-                    }
-                } else if (camera.position.y + game.gridSize <= maxY) {
-                    cameraInterpolation(0, game.gridSize);
+                if (camera.position.y + game.gridSize * 5 <= maxY) {
+                    cameraInterpolation(0, game.gridSize * 5);
+                } else {
+                    cameraInterpolation(0, maxY - camera.position.y);
                 }
                 break;
             case Input.Keys.U:
-                if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) || Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT)) {
-                    if (camera.position.x + game.gridSize * 5 <= maxX
-                            && camera.position.y + game.gridSize * 5 <= maxY) {
-                        cameraInterpolation(game.gridSize * 5, game.gridSize * 5);
-                    } else {
-                        float distance = Math.min(maxX - camera.position.x, maxY - camera.position.y);
-                        cameraInterpolation(distance, distance);
-                    }
-                } else if (camera.position.x + game.gridSize <= maxX && camera.position.y + game.gridSize <= maxY) {
-                    cameraInterpolation(game.gridSize, game.gridSize);
+                if (camera.position.x + game.gridSize * 5 <= maxX
+                        && camera.position.y + game.gridSize * 5 <= maxY) {
+                    cameraInterpolation(game.gridSize * 5, game.gridSize * 5);
+                } else {
+                    float distance = Math.min(maxX - camera.position.x, maxY - camera.position.y);
+                    cameraInterpolation(distance, distance);
                 }
                 break;
             case Input.Keys.Y:
-                if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) || Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT)) {
-                    if (camera.position.x - game.gridSize * 5 >= camera.viewportWidth / 2
-                            && camera.position.y + game.gridSize * 5 <= maxY) {
-                        cameraInterpolation(-game.gridSize * 5, game.gridSize * 5);
-                    } else {
-                        float distance = Math.min(Math.abs(camera.viewportWidth / 2 - camera.position.x),
-                                maxY - camera.position.y);
-                        cameraInterpolation(-distance, distance);
-                    }
-                } else if (camera.position.x - game.gridSize >= camera.viewportWidth / 2
-                        && camera.position.y + game.gridSize <= maxY) {
-                    cameraInterpolation(-game.gridSize, game.gridSize);
+                if (camera.position.x - game.gridSize * 5 >= camera.viewportWidth / 2
+                        && camera.position.y + game.gridSize * 5 <= maxY) {
+                    cameraInterpolation(-game.gridSize * 5, game.gridSize * 5);
+                } else {
+                    float distance = Math.min(Math.abs(camera.viewportWidth / 2 - camera.position.x),
+                            maxY - camera.position.y);
+                    cameraInterpolation(-distance, distance);
                 }
                 break;
             case Input.Keys.B:
-                if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) || Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT)) {
-                    if (camera.position.x - game.gridSize * 5 >= camera.viewportWidth / 2
-                            && camera.position.y - game.gridSize * 5 >= camera.viewportHeight / 2) {
-                        cameraInterpolation(-game.gridSize * 5, -game.gridSize * 5);
-                    } else {
-                        float distance = Math.max(camera.viewportWidth / 2 - camera.position.x,
-                                camera.viewportHeight / 2 - camera.position.y);
-                        cameraInterpolation(distance, distance);
-                    }
-                } else if (camera.position.x - game.gridSize >= camera.viewportWidth / 2
-                        && camera.position.y - game.gridSize >= camera.viewportHeight / 2) {
-                    cameraInterpolation(-game.gridSize, -game.gridSize);
+                if (camera.position.x - game.gridSize * 5 >= camera.viewportWidth / 2
+                        && camera.position.y - game.gridSize * 5 >= camera.viewportHeight / 2) {
+                    cameraInterpolation(-game.gridSize * 5, -game.gridSize * 5);
+                } else {
+                    float distance = Math.max(camera.viewportWidth / 2 - camera.position.x,
+                            camera.viewportHeight / 2 - camera.position.y);
+                    cameraInterpolation(distance, distance);
                 }
                 break;
             case Input.Keys.N:
-                if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) || Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT)) {
-                    if (camera.position.x + game.gridSize * 5 <= maxX
-                            && camera.position.y - game.gridSize * 5 >= camera.viewportHeight / 2) {
-                        cameraInterpolation(game.gridSize * 5, -game.gridSize * 5);
-                    } else {
-                        float distance = Math.min(maxX - camera.position.x,
-                                Math.abs(camera.viewportHeight / 2 - camera.position.y));
-                        cameraInterpolation(distance, -distance);
-                    }
-                } else if (camera.position.x + game.gridSize <= maxX
-                        && camera.position.y - game.gridSize >= camera.viewportHeight / 2) {
-                    cameraInterpolation(game.gridSize, -game.gridSize);
+                if (camera.position.x + game.gridSize * 5 <= maxX
+                        && camera.position.y - game.gridSize * 5 >= camera.viewportHeight / 2) {
+                    cameraInterpolation(game.gridSize * 5, -game.gridSize * 5);
+                } else {
+                    float distance = Math.min(maxX - camera.position.x,
+                            Math.abs(camera.viewportHeight / 2 - camera.position.y));
+                    cameraInterpolation(distance, -distance);
                 }
                 break;
         }

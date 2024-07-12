@@ -68,8 +68,8 @@ public class GameScreen implements Screen {
             cameraInput.setElapsedTime(cameraInput.getElapsedTime() + delta);
             float progress = Math.min(1, cameraInput.getElapsedTime() / cameraInput.getMoveDuration());
             camera.position.set(
-                    Interpolation.smooth.apply(cameraInput.getStartX(), cameraInput.getTargetX(), progress),
-                    Interpolation.smooth.apply(cameraInput.getStartY(), cameraInput.getTargetY(), progress), 0);
+                    Interpolation.linear.apply(cameraInput.getStartX(), cameraInput.getTargetX(), progress),
+                    Interpolation.linear.apply(cameraInput.getStartY(), cameraInput.getTargetY(), progress), 0);
             if (camera.position.x == cameraInput.getTargetX() && camera.position.y == cameraInput.getTargetY()) {
                 cameraInput.setIsMoving(false);
             }
