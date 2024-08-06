@@ -5,13 +5,13 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.cyclone.projecta.App;
+import com.cyclone.projecta.ECS;
 
 public class MainMenuScreen implements Screen {
-    private final App game;
-    private OrthographicCamera camera;
+    private final ECS game;
+    private final OrthographicCamera camera;
 
-    public MainMenuScreen(App game) {
+    public MainMenuScreen(ECS game) {
         this.game = game;
 
         camera = new OrthographicCamera();
@@ -27,24 +27,6 @@ public class MainMenuScreen implements Screen {
         game.font.draw(game.batch, "Press Enter to begin", 280, 240);
         game.batch.end();
 
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT_BRACKET)) {
-            camera.zoom += 0.02;
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT_BRACKET)) {
-            camera.zoom -= 0.02;
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            camera.translate(0, 3, 0);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            camera.translate(0, -3, 0);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            camera.translate(-3, 0, 0);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            camera.translate(3, 0, 0);
-        }
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
         }

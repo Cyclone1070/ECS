@@ -1,15 +1,32 @@
 package com.cyclone.projecta.inputProcessors;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.cyclone.projecta.App;
+import com.badlogic.gdx.math.Interpolation;
+import com.cyclone.projecta.ECS;
 
+/**
+ * <p>
+ * Public methods:
+ * </p>
+ * <ul>
+ * <li>getIsMoving(): return true if the camera wants to move (when key is
+ * pressed
+ * or in the middle of animation)</li>
+ *
+ * <li>animateCamera(float delta): trigger camera animation process, set
+ * isMoving to
+ * false when animation finishes</li>
+ *
+ * <li>processKeyHeld(float delta): check for key held time and trigger auto
+ * repeat
+ * input</li>
+ */
 public class CameraInputProcessor implements InputProcessor {
-    private App game;
+    private final ECS game;
     // For checking camera bound
-    private OrthographicCamera camera;
+    private final OrthographicCamera camera;
     private float maxX;
     private float maxY;
     // For interpolation
@@ -24,58 +41,7 @@ public class CameraInputProcessor implements InputProcessor {
     private int currentKeyHeld = 0;
     private float timeHeld = 0f;
 
-    // region Getters and setters
-    public float getTargetX() {
-        return targetX;
-    }
-
-    public float getTargetY() {
-        return targetY;
-    }
-
-    public float getStartX() {
-        return startX;
-    }
-
-    public float getStartY() {
-        return startY;
-    }
-
-    public float getMoveDuration() {
-        return moveDuration;
-    }
-
-    public void setElapsedTime(float elapsedTime) {
-        this.elapsedTime = elapsedTime;
-    }
-
-    public float getElapsedTime() {
-        return elapsedTime;
-    }
-
-    public boolean getIsMoving() {
-        return isMoving;
-    }
-
-    public void setIsMoving(boolean isMoving) {
-        this.isMoving = isMoving;
-    }
-
-    public float getTimeHeld() {
-        return timeHeld;
-    }
-
-    public void setTimeHeld(float timeHeld) {
-        this.timeHeld = timeHeld;
-    }
-
-    public int getCurrentKeyHeld() {
-        return currentKeyHeld;
-    }
-    // endregion
-    // For key repeat when held down
-
-    public CameraInputProcessor(OrthographicCamera camera, App game) {
+    public CameraInputProcessor(OrthographicCamera camera, ECS game) {
         this.camera = camera;
         this.game = game;
         maxX = game.gridWidth * game.gridSize - camera.viewportWidth / 2;
@@ -177,6 +143,20 @@ public class CameraInputProcessor implements InputProcessor {
         }
     }
 
+    /**
+     * Check for key held time and trigger auto-repeat input
+     */
+    public void processKeyHeld(float delta) {
+        if (currentKeyHeld != 0) {
+            timeHeld += delta;
+        } else {
+            timeHeld = 0;
+        }
+        if (timeHeld > 0.5f && !isMoving) {
+            processInput(currentKeyHeld);
+        }
+    }
+
     // To animate the camera
     private void cameraInterpolation(float distanceX, float distanceY) {
         if (isMoving) {
@@ -188,6 +168,22 @@ public class CameraInputProcessor implements InputProcessor {
         startX = camera.position.x;
         startY = camera.position.y;
         elapsedTime = 0;
+    }
+
+    /**
+     * Trigger camera animation process, set
+     * isMoving to
+     * false when animation finishes
+     */
+    public void animateCamera(float delta) {
+        elapsedTime += delta;
+        float progress = Math.min(1, elapsedTime / moveDuration);
+        camera.position.set(
+                Interpolation.linear.apply(startX, targetX, progress),
+                Interpolation.linear.apply(startY, targetY, progress), 0);
+        if (camera.position.x == targetX && camera.position.y == targetY) {
+            isMoving = false;
+        }
     }
 
     @Override
@@ -223,5 +219,16 @@ public class CameraInputProcessor implements InputProcessor {
     @Override
     public boolean scrolled(float amountX, float amountY) {
         return false;
+    }
+
+    // Getters and setters
+
+    /**
+     * Return true if the camera wants to move (when key is
+     * pressed
+     * or in the middle of animation)
+     */
+    public boolean getIsMoving() {
+        return isMoving;
     }
 }

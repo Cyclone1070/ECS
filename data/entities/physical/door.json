@@ -1,0 +1,11 @@
+{
+    "components": [
+        {
+            "class": "com.cyclone.ECS.components.PositionComponent"
+        },
+        {
+            "class": "com.cyclone.ECS.components.SpriteComponent",
+            "defaultSprite": "door"
+        }
+    ]
+}
