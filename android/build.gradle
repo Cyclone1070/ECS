@@ -1,5 +1,5 @@
 android {
-    namespace "com.cyclone.projecta"
+    namespace "com.cyclone.ECS"
     buildToolsVersion "33.0.2"
     compileSdkVersion 33
     sourceSets {
@@ -18,7 +18,7 @@ android {
         exclude 'META-INF/robovm/ios/robovm.xml'
     }
     defaultConfig {
-        applicationId "com.cyclone.projecta"
+        applicationId "com.cyclone.ECS"
         minSdkVersion 19
         targetSdkVersion 33
         versionCode 1
@@ -83,7 +83,7 @@ tasks.register('run', Exec) {
     }
 
     def adb = path + "/platform-tools/adb"
-    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.cyclone.projecta/com.cyclone.projecta.AndroidLauncher'
+    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.cyclone.ECS/com.cyclone.ECS.AndroidLauncher'
 }
 
 eclipse.project.name = appName + "-android"

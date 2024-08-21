@@ -14,16 +14,16 @@
             "type": "java",
             "name": "DesktopLauncher",
             "request": "launch",
-            "mainClass": "com.cyclone.projecta.DesktopLauncher",
-            "projectName": "projecta-desktop",
+            "mainClass": "com.cyclone.ECS.DesktopLauncher",
+            "projectName": "ECS-desktop",
             "vmArgs": "-XstartOnFirstThread"
         },
         {
             "type": "java",
             "name": "IOSLauncher",
             "request": "launch",
-            "mainClass": "com.cyclone.projecta.IOSLauncher",
-            "projectName": "projecta-ios"
+            "mainClass": "com.cyclone.ECS.IOSLauncher",
+            "projectName": "ECS-ios"
         }
     ]
 }

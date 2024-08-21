@@ -1,66 +1,67 @@
-{
-    "components": [
-        {
-            "class": "com.cyclone.ECS.components.PositionComponent"
-        },
-        {
-            "class": "com.cyclone.ECS.components.SpriteComponent",
-            "defaultSprite": "wall",
-            "defaultSpriteChecks": {
-                "wallLRUD": [
-                    {"x": -1, "y": 0, "z": 0, "entity": "wall"},
-                    {"x": 1, "y": 0, "z": 0, "entity": "wall"},
-                    {"x": 0, "y": 1, "z": 0, "entity": "wall"},
-                    {"x": 0, "y": -1, "z": 0, "entity": "wall"}
-                ],
-                "wallLRU": [
-                    {"x": -1, "y": 0, "z": 0, "entity": "wall"},
-                    {"x": 1, "y": 0, "z": 0, "entity": "wall"},
-                    {"x": 0, "y": 1, "z": 0, "entity": "wall"}
-                ],
-                "wallLRD": [
-                    {"x": -1, "y": 0, "z": 0, "entity": "wall"},
-                    {"x": 1, "y": 0, "z": 0, "entity": "wall"},
-                    {"x": 0, "y": -1, "z": 0, "entity": "wall"}
-                ],
-                "wallLUD": [
-                    {"x": -1, "y": 0, "z": 0, "entity": "wall"},
-                    {"x": 0, "y": 1, "z": 0, "entity": "wall"},
-                    {"x": 0, "y": -1, "z": 0, "entity": "wall"}
-                ],
-                "wallRUD": [
-                    {"x": 1, "y": 0, "z": 0, "entity": "wall"},
-                    {"x": 0, "y": 1, "z": 0, "entity": "wall"},
-                    {"x": 0, "y": -1, "z": 0, "entity": "wall"}
-                ],
-                "wallLR": [
-                    {"x": -1, "y": 0, "z": 0, "entity": "wall"},
-                    {"x": 1, "y": 0, "z": 0, "entity": "wall"}
-                ],
-                "wallUD": [
-                    {"x": 0, "y": 1, "z": 0, "entity": "wall"},
-                    {"x": 0, "y": -1, "z": 0, "entity": "wall"}
-                ],
-                "wallRU": [
-                    {"x": 1, "y": 0, "z": 0, "entity": "wall"},
-                    {"x": 0, "y": 1, "z": 0, "entity": "wall"}
-                ],
-                "wallRD": [
-                    {"x": 1, "y": 0, "z": 0, "entity": "wall"},
-                    {"x": 0, "y": -1, "z": 0, "entity": "wall"}
-                ],
-                "wallLU": [
-                    {"x": -1, "y": 0, "z": 0, "entity": "wall"},
-                    {"x": 0, "y": 1, "z": 0, "entity": "wall"}
-                ],
-                "wallLD": [
-                    {"x": -1, "y": 0, "z": 0, "entity": "wall"},
-                    {"x": 0, "y": -1, "z": 0, "entity": "wall"}
-                ],
-                "wallUDEnd": [
-                    {"x": 0, "y": 1, "z": 0, "entity": "wall"}
-                ]
-            }
-        }
-    ]
-}
+[
+  {
+    "class": "com.cyclone.ECS.components.PositionComponent"
+  },
+  {
+    "class": "com.cyclone.ECS.components.SpriteComponent",
+    "defaultSprite": "wall",
+    "currentSprite": "wall"
+  }
+]
+
+
+//"defaultSpriteChecks": {
+//                "wallLRUD": [
+//                    {"x": -1, "y": 0, "z": 0, "entity": "wall"},
+//                    {"x": 1, "y": 0, "z": 0, "entity": "wall"},
+//                    {"x": 0, "y": 1, "z": 0, "entity": "wall"},
+//                    {"x": 0, "y": -1, "z": 0, "entity": "wall"}
+//                ],
+//                "wallLRU": [
+//                    {"x": -1, "y": 0, "z": 0, "entity": "wall"},
+//                    {"x": 1, "y": 0, "z": 0, "entity": "wall"},
+//                    {"x": 0, "y": 1, "z": 0, "entity": "wall"}
+//                ],
+//                "wallLRD": [
+//                    {"x": -1, "y": 0, "z": 0, "entity": "wall"},
+//                    {"x": 1, "y": 0, "z": 0, "entity": "wall"},
+//                    {"x": 0, "y": -1, "z": 0, "entity": "wall"}
+//                ],
+//                "wallLUD": [
+//                    {"x": -1, "y": 0, "z": 0, "entity": "wall"},
+//                    {"x": 0, "y": 1, "z": 0, "entity": "wall"},
+//                    {"x": 0, "y": -1, "z": 0, "entity": "wall"}
+//                ],
+//                "wallRUD": [
+//                    {"x": 1, "y": 0, "z": 0, "entity": "wall"},
+//                    {"x": 0, "y": 1, "z": 0, "entity": "wall"},
+//                    {"x": 0, "y": -1, "z": 0, "entity": "wall"}
+//                ],
+//                "wallLR": [
+//                    {"x": -1, "y": 0, "z": 0, "entity": "wall"},
+//                    {"x": 1, "y": 0, "z": 0, "entity": "wall"}
+//                ],
+//                "wallUD": [
+//                    {"x": 0, "y": 1, "z": 0, "entity": "wall"},
+//                    {"x": 0, "y": -1, "z": 0, "entity": "wall"}
+//                ],
+//                "wallRU": [
+//                    {"x": 1, "y": 0, "z": 0, "entity": "wall"},
+//                    {"x": 0, "y": 1, "z": 0, "entity": "wall"}
+//                ],
+//                "wallRD": [
+//                    {"x": 1, "y": 0, "z": 0, "entity": "wall"},
+//                    {"x": 0, "y": -1, "z": 0, "entity": "wall"}
+//                ],
+//                "wallLU": [
+//                    {"x": -1, "y": 0, "z": 0, "entity": "wall"},
+//                    {"x": 0, "y": 1, "z": 0, "entity": "wall"}
+//                ],
+//                "wallLD": [
+//                    {"x": -1, "y": 0, "z": 0, "entity": "wall"},
+//                    {"x": 0, "y": -1, "z": 0, "entity": "wall"}
+//                ],
+//                "wallUDEnd": [
+//                    {"x": 0, "y": 1, "z": 0, "entity": "wall"}
+//                ]
+//            }

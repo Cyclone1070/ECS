@@ -4,8 +4,8 @@
   },
   {
     "class": "com.cyclone.ECS.components.SpriteComponent",
-    "defaultSprite": "door",
-    "currentSprite": "door"
+    "defaultSprite": "grass",
+    "currentSprite": "grass"
   }
 ]
 

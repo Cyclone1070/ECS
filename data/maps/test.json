@@ -3,7 +3,7 @@
     "name": "test",
     "palette": {
         "#": "physical/wall",
-        ".": "physical/floor",
+        ".": "physical/grass",
         "0": "physical/door"
     },
     "floor": [
