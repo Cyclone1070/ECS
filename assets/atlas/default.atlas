@@ -1,0 +1,11 @@
+default.png
+size:256,64
+repeat:none
+door
+bounds:104,2,32,32
+grass
+bounds:70,2,32,32
+wallLR
+bounds:36,2,32,32
+wallUD
+bounds:2,2,32,32
