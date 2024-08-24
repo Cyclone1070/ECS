@@ -29,7 +29,6 @@ public class ECS extends Game {
     public int viewportHeight = 704;
 
     public void create() {
-        System.out.println(Gdx.files.getLocalStoragePath());
         tileMap = new TileMap(gridDepth, gridWidth, gridHeight);
         batch = new SpriteBatch();
         engine = new PooledEngine(20, 50, 20, 50);
